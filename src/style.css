@@ -1,6 +1,63 @@
-body{
-    background-color: #e0e0e0;
+
+main {
+  background-color: white;
+  width: 350px;
+  padding: 1px 0 10px 0;
+  margin: auto;
+  margin-bottom: 0;
+  -webkit-box-shadow: 0 1px 7px 1px rgba(179, 170, 179, 1);
+  -moz-box-shadow: 0 1px 7px 1px rgba(179, 170, 179, 1);
+  box-shadow: 0 1px 7px 1px rgba(179, 170, 179, 1);
 }
-.hello{
-    color:red;
+
+h2 {
+  display: inline-block;
+  width: 90%;
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+i {
+  color: lightslategrey;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 0.5px solid #e0e0e0;
+  font-style: italic;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+
+li {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 10px 10px 5px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+li > input.text {
+  display: inline;
+  width: 90%;
+  border: none;
+  font-style: normal;
+}
+
+button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 20px 10px 10px 10px;
+  color: grey;
+  cursor: pointer;
 }
