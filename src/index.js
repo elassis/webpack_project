@@ -1,7 +1,8 @@
 /* eslint-disable */
 import _ from 'lodash';
-
 import './style.css';
+import {status} from './status.js';
+import {dragDrop} from './dragDrop.js';
 
 function component() {
   
@@ -25,14 +26,30 @@ function component() {
   const element = document.querySelector('.to-do-placeholder');
 
   function addList(obj, ele) {
-    const arr = Array.from(obj);
-    arr.forEach((task) => {
-      const childElement = `<li id="${task.index}"><input type="checkbox"><input type="text" class="text" value="${task.description}"><i class="fas fa-ellipsis-v"></i></li>`;
+    let arr = []
+    if(localStorage.length === 0){
+     arr = Array.from(obj);
+     console.log(arr);
+    }else{
+      arr = Array.from(JSON.parse(localStorage.getItem('lists')));
+      console.log(arr);
+    }
+    arr.forEach((task,i) => {
+      const childElement = `<div id="${i}" class="container">
+                              <li draggable="true"id="${task.index}">
+                                <input class="check" type="checkbox">
+                                <input type="text" disabled class="text" value="${task.description}">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </li>
+                            </div>`;
       ele.innerHTML += childElement;
     });
   }
-
   addList(objArr, element);
+  status();
+  dragDrop()
 }
+
+
 
 document.body.appendChild(component());
