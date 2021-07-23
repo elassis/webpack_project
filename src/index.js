@@ -28,20 +28,19 @@ function component() {
   function addList(obj, ele) {
     let arr = []
     if(localStorage.length === 0){
-     arr = Array.from(obj);
-     console.log(arr);
+     arr = Array.from(obj);    
     }else{
-      arr = Array.from(JSON.parse(localStorage.getItem('lists')));
-      console.log(arr);
+      arr = Array.from(JSON.parse(localStorage.getItem('lists')));     
     }
     arr.forEach((task,i) => {
-      const childElement = `<div id="${i}" class="container">
-                              <li draggable="true"id="${task.index}">
-                                <input class="check" type="checkbox">
-                                <input type="text" disabled class="text" value="${task.description}">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </li>
-                            </div>`;
+      const childElement = ` <div class="container">
+                                <li draggable="true" id="${task.index}">
+                                  <input class="check" type="checkbox">
+                                  <input type="text" disabled class="text" value="${task.description}">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </li>
+                              </div>
+                            `;
       ele.innerHTML += childElement;
     });
   }

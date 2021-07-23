@@ -1,58 +1,55 @@
 import {setLocalStorage} from './status.js';
+
 function dragDrop(){
-   let containers = document.getElementsByClassName('container');
+   
    let elements = document.getElementsByTagName('li');
-   for(let i = 0; i < containers.length; i++){
-    containers[i].addEventListener('dragenter',function(e){
-       //change value of object when drag
-        positionObj[i] = true;
-        console.log(positionObj)
-    })
+   let dragItem = null;
+   let containers = document.querySelectorAll('.container');
+
+   for(let i = 0;i<elements.length;i++){
+       let element = elements[i];
+       element.addEventListener('dragstart',(e)=>{
+            dragItem = element;               
+       }) 
+       
+       element.addEventListener('dragend',(e)=>{
+         dragItem = null; 
+       })
    }
 
-
-let positionObj = {
-    0:false,
-    1:false,
-    2:false,
-}
-
-for(let i = 0; i< elements.length; i++){
-    elements[i].addEventListener('dragend',function(){
-        interchange(i);
-    })
+   for(let i = 0;i < containers.length;i++){
+    let container = containers[i];
+       
+    container.addEventListener('dragover',(e)=>{
+         e.preventDefault();
+    }) 
     
+    container.addEventListener('dragenter',(e)=>{
+        e.preventDefault();
+        
+    })
+
+    container.addEventListener('drop',(e)=>{        
+        interchange(dragItem,container.firstElementChild)
+        setLocalStorage();
+    })
 }
 
-function interchange(idDraggedElement){
-  let i = 0,objectSize = Object.keys(positionObj).length;
-  let childs = document.getElementsByTagName('li');
-  let containers = document.getElementsByClassName('container');
-  let childToMove = childs[idDraggedElement];
-  let currentChild ='';
-  while(i < objectSize){
-      if(positionObj[i]=== true && idDraggedElement !== i){
-          console.log('container '+ i);
-          currentChild = childs[i];
-        //   console.log(currentChild.children[1].value)
-          containers[i].removeChild(currentChild);
-          containers[idDraggedElement].removeChild(childToMove);
-          containers[i].appendChild(childToMove);
-          containers[idDraggedElement].appendChild(currentChild);  
-          
-      }
-      i++;
-  }
+    function interchange(newElement,currentElement){
+        let dragItem = newElement;
+        let oldElement = currentElement;
+        let parentDrag = dragItem.parentNode;
+        let parentOld = oldElement.parentNode;
 
-  //reset the object
-  for(let index in positionObj){
-      positionObj[index]=false;
-  }
-  setLocalStorage();
-  console.log(positionObj)
+        parentDrag.appendChild(oldElement);
+        parentOld.appendChild(dragItem);
+        
+    }
+
+  
 }
        
    
-}
+
 
 export {dragDrop};
