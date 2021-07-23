@@ -1,55 +1,55 @@
-import {setLocalStorage} from './status.js';
+import { setLocalStorage } from './status.js';
 
-function dragDrop(){
-   
-   let elements = document.getElementsByTagName('li');
-   let dragItem = null;
-   let containers = document.querySelectorAll('.container');
+function interchange(newElement, currentElement) {
+  const dragItem = newElement;
+  const oldElement = currentElement;
+  const parentDrag = dragItem.parentNode;
+  const parentOld = oldElement.parentNode;
 
-   for(let i = 0;i<elements.length;i++){
-       let element = elements[i];
-       element.addEventListener('dragstart',(e)=>{
-            dragItem = element;               
-       }) 
-       
-       element.addEventListener('dragend',(e)=>{
-         dragItem = null; 
-       })
-   }
-
-   for(let i = 0;i < containers.length;i++){
-    let container = containers[i];
-       
-    container.addEventListener('dragover',(e)=>{
-         e.preventDefault();
-    }) 
-    
-    container.addEventListener('dragenter',(e)=>{
-        e.preventDefault();
-        
-    })
-
-    container.addEventListener('drop',(e)=>{        
-        interchange(dragItem,container.firstElementChild)
-        setLocalStorage();
-    })
+  parentDrag.appendChild(oldElement);
+  parentOld.appendChild(dragItem);
 }
 
-    function interchange(newElement,currentElement){
-        let dragItem = newElement;
-        let oldElement = currentElement;
-        let parentDrag = dragItem.parentNode;
-        let parentOld = oldElement.parentNode;
+function dragDrop() {
+  const elements = document.getElementsByTagName('li');
+  let dragItem = null;
+  const containers = document.querySelectorAll('.container');
+  let i = 0;
+  let j = 0;
+  while (i < elements.length) {
+    const element = elements[i];
+    /* eslint-disable */
+    element.addEventListener('dragstart', () => {
+      dragItem = element;
+    });
+      /* eslint-disable */
+    element.addEventListener('dragend', () => {
+      dragItem = null;
+    });
+    /* eslint-disable */
+    i++;
+  }
 
-        parentDrag.appendChild(oldElement);
-        parentOld.appendChild(dragItem);
-        
-    }
+  while (j < containers.length) {
+    const container = containers[j];
+  /* eslint-disable */
+    container.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+  /* eslint-disable */
+    container.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+    });
+  /* eslint-disable */
+    container.addEventListener('drop', (
 
-  
+    ) => {
+      interchange(dragItem, container.firstElementChild);
+      setLocalStorage();
+    });
+    /* eslint-disable */
+    j++;
+  }
 }
-       
-   
-
-
-export {dragDrop};
+  /* eslint-disable */
+export { dragDrop };

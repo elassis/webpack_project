@@ -63,12 +63,13 @@ button {
   cursor: pointer;
 }
 
-.done{
-  color:grey;
-  cursor:not-allowed;
+.done {
+  color: grey;
+  cursor: not-allowed;
   text-decoration: line-through;
 }
-.container{
-  height:56px;
+
+.container {
+  height: 56px;
   background-color: grey;
 }
