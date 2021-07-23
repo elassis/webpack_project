@@ -51,4 +51,4 @@ function component() {
 
 
 
-document.body.appendChild(component());
+window.onload=component();
