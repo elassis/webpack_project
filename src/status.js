@@ -47,4 +47,4 @@ function status() {
   }
 }
 
-export { status, setLocalStorage };
+export { status, setLocalStorage, setStyle };
