@@ -1,4 +1,5 @@
 .eslintrc.json
 .stylelintrc.json
-.vscode
+/.vscode
+/.github
 /node_modules
