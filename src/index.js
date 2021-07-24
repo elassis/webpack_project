@@ -1,17 +1,17 @@
 /* eslint-disable */
 import _ from 'lodash';
 import './style.css';
-import {status} from './status.js';
-import {dragDrop} from './dragDrop.js';
-import {add} from './crud.js';
+import './status.js';
+import { add, deleteItem } from './crud.js'; 
+import { dragDrop } from './dragDrop.js';
 
 function component() {
   const element = document.querySelector('.to-do-placeholder');  
   add(element);
-  status();
+  deleteItem();
   dragDrop();
 }
 
 
 
-document.body.appendChild(component());
+component();

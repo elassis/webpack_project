@@ -1,50 +1,49 @@
-function setStyle(json) {
-  const inputs = document.getElementsByClassName('text');
-  const chks = document.getElementsByClassName('check');
-  const obj = JSON.parse(json);
-
-  obj.forEach((element) => {
-    if (element.checked === true) {
-      inputs[element.index].classList.add('done');
-      chks[element.index].checked = true;
-    } else {
-      inputs[element.index].classList.remove('done');
+const updateLS = (str, index) => {
+  const arrLS = Array.from(JSON.parse(localStorage.getItem('lists')));
+  // update localstorage object
+  arrLS.forEach((object) => {
+    // inside object elements start in 1
+    if (object.index === index) {
+      if (str === 'y') {
+        object.completed = true;
+      } else if (str === 'n') {
+        object.completed = false;
+      } else {
+        object.description = str;
+      }
     }
   });
-}
-function setLocalStorage() {
-  const arr = [];
   localStorage.clear();
-  const elements = document.getElementsByClassName('check');
-  const containers = document.getElementsByTagName('li');
-  let i = 0;
-  while (i < elements.length) {
-    const obj = {
-      index: i,
-      checked: elements[i].checked,
-      description: containers[i].children[1].value,
-    };
-    arr.push(obj);
-    /* eslint-disable */
-    i++;
+  localStorage.setItem('lists', JSON.stringify(arrLS));
+};
+
+function setStyle(index) {
+  // set the style to the input of the same node with same id
+  const input = document.getElementById(`text-${index}`);
+
+  if (input.classList.contains('done')) {
+    input.classList.remove('done');
+    updateLS('n', parseInt(index, 10));
+  } else {
+    input.classList.add('done');
+    updateLS('y', parseInt(index, 10));
   }
-  localStorage.setItem('lists', JSON.stringify(arr));
-  setStyle(localStorage.getItem('lists'));
+}
+
+function setLocalStorage(objArreglo) {
+  localStorage.setItem('lists', JSON.stringify(objArreglo));
 }
 
 function status() {
-  const elements = document.getElementsByClassName('check');
-  let i = 0;
-  while (i < elements.length) {
-    elements[i].addEventListener('change', () => {
-      setLocalStorage();
+  const checks = document.querySelectorAll('.check');
+  const arr = Array.from(checks);
+  arr.forEach((checkBox) => {
+    checkBox.addEventListener('change', () => {
+      setStyle(checkBox.id);
     });
-    /* eslint-disable */
-    i++;
-  }
-  if (localStorage.getItem('lists')) {
-    setStyle(localStorage.getItem('lists'));
-  }
+  });
 }
 
-export { status, setLocalStorage, setStyle };
+export {
+  status, setLocalStorage, setStyle, updateLS,
+};

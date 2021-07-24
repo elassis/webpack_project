@@ -10,46 +10,57 @@ function interchange(newElement, currentElement) {
   parentOld.appendChild(dragItem);
 }
 
+function reOrderLS() {
+  const elements = document.getElementsByTagName('li');
+  const arrElements = Array.from(elements);
+  const arrObj = [];
+
+  arrElements.forEach((element) => {
+    const obj = {
+      index: parseInt(element.id, 10),
+      description: element.children[1].value,
+      completed: element.children[0].checked,
+    };
+    arrObj.push(obj);
+  });
+
+  localStorage.clear();
+  setLocalStorage(arrObj);
+}
+
 function dragDrop() {
   const elements = document.getElementsByTagName('li');
-  let dragItem = null;
+  const arrElements = Array.from(elements);
   const containers = document.querySelectorAll('.container');
-  let i = 0;
-  let j = 0;
-  while (i < elements.length) {
-    const element = elements[i];
-    /* eslint-disable */
+  const arrContainers = Array.from(containers);
+  let dragItem = null;
+
+  arrElements.forEach((element) => {
     element.addEventListener('dragstart', () => {
       dragItem = element;
     });
-      /* eslint-disable */
+
     element.addEventListener('dragend', () => {
       dragItem = null;
     });
-    /* eslint-disable */
-    i++;
-  }
+  });
 
-  while (j < containers.length) {
-    const container = containers[j];
-  /* eslint-disable */
+  arrContainers.forEach((container) => {
     container.addEventListener('dragover', (e) => {
       e.preventDefault();
     });
-  /* eslint-disable */
+
     container.addEventListener('dragenter', (e) => {
       e.preventDefault();
     });
-  /* eslint-disable */
+
     container.addEventListener('drop', (
 
     ) => {
       interchange(dragItem, container.firstElementChild);
-      setLocalStorage();
+      reOrderLS();
     });
-    /* eslint-disable */
-    j++;
-  }
+  });
 }
-  /* eslint-disable */
+/* eslint-disable */
 export { dragDrop };

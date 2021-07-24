@@ -49,9 +49,27 @@ li {
 
 li > input.text {
   display: inline;
-  width: 90%;
+  width: 75%;
   border: none;
   font-style: normal;
+}
+
+.fa-trash-alt,
+.fa-ellipsis-v {
+  display: none;
+}
+
+.fa-trash-alt {
+  padding: 0 10px;
+}
+
+.fa-ellipsis-v:hover {
+  cursor: -webkit-grab;
+}
+
+li:hover > .fa-trash-alt,
+li:hover > .fa-ellipsis-v {
+  display: inline;
 }
 
 button {
