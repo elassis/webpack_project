@@ -1,82 +1,110 @@
-import { status, setLocalStorage, updateLS } from './status.js';
-import { dragDrop } from './dragDrop.js';
+/* eslint-disable */
+import { interactions } from './interactions.js';
 
-function showItems(arrObj, container) {
-  arrObj.forEach((task) => {
-    const classAssigned = (task.completed) ? 'text done' : 'text';
-    const checked = (classAssigned === 'text done') ? 'checked' : '';
-    const childElement = `<div class="container">
-                                <li draggable="true" id="${task.index}">
-                                  <input id="${task.index}"class="check" ${checked} type="checkbox">
-                                  <input id="text-${task.index}" type="text" class="${classAssigned}" value="${task.description}">
-                                  <i class="fas fa-trash-alt"></i>
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </li>
-                              </div>
-                        `;
+const LocalStorage = window.localStorage;
 
-    container.innerHTML += childElement;
-  });
-}
+class ListItem {
+  static list = [];
+/* eslint-disable */
+  constructor(description, index, completed = false) {
+    this.index = index,
+    this.description = description,
+    this.completed = completed;
+  }
 
-function add(container) {
-  const objArr = (localStorage.length === 0) ? [] : Array.from(JSON.parse(localStorage.getItem('lists')));
-
-  document.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter' && e.target.id === 'main-input' && e.target.value !== '') {
-      const obj = {
-        index: objArr.length + 1,
-        description: e.target.value,
-        completed: false,
-      };
-      objArr.push(obj);
-      e.target.value = '';
-      container.innerHTML = '';
-      setLocalStorage(objArr);
-      showItems(objArr, container);
-      status();
-    } else if (e.key === 'Enter' && e.target.id !== 'main-input' && e.target.value !== '') {
-      const idTochangeInObject = parseInt(e.target.parentNode.id, 10);
-      const inputValue = e.target.value;
-      updateLS(inputValue, idTochangeInObject);
+  // check if there's elements in localstorage
+  static init() {
+    if (LocalStorage.getItem('lists')) {
+    // if there is elements in the localstorage renders it in the window
+      const arrLS = Array.from(JSON.parse(LocalStorage.getItem('lists')));
+      this.render(arrLS);
+    } else {
+      localStorage.setItem('lists', '[]');
     }
-    dragDrop();
-  });
-  showItems(objArr, container);
-  status();
-}
+  }
 
-function deleteItem() {
-  document.addEventListener('click', (e) => {
-    if (e.target.classList[1] === 'fa-trash-alt') {
-      const parent = e.target.parentNode;
-      const li = parent.parentNode;
-      const ul = li.parentNode;
-      // grab element id
-      const elementId = parseInt(parent.id, 10);
-      ul.removeChild(li);
-      const arrLS = Array.from(JSON.parse(localStorage.getItem('lists')));
-      // number to start
+  static addItem(value) {
+    const item = new ListItem(value);
+    // console.log(item)
+    if (localStorage.length > 0) {
+      const arrNew = Array.from(JSON.parse(localStorage.getItem('lists')));
+      item.index = arrNew.length + 1;
+      arrNew.push(item);
+      interactions.setLocalStorage(arrNew);
+    } else {
+      item.index = 1;
+      this.list.push(item);
+      interactions.setLocalStorage(this.list);
+    }
+  }
 
-      // create new array of the elements without the id erased
-      const arrayToSave = arrLS.filter((object) => object.index !== elementId);
+  static render(array) {
+    const ulElement = document.querySelector('#parent');
+    ulElement.innerHTML = '';
+    array.forEach((item) => {
+      const value = (item.completed === true) ? 'checked' : '';
+      const classToShow = (value === 'checked') ? 'text done' : 'text';
+      const child = `<div class="container">
+                    <li draggable="true">
+                      <input id="${item.index}" ${value} type="checkbox" class="check" id="">
+                      <input class="${classToShow}" type="text" value="${item.description}">
+                      <i class="fas fa-trash-alt"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </li>
+                  </div>`;
+      ulElement.innerHTML += child;
+    });
+  }
 
-      // set the new indexes to the array
-      arrayToSave.forEach((object, i) => {
+  static editItem(index, mssg) {
+    const arrLS = Array.from(JSON.parse(LocalStorage.getItem('lists')));
+    arrLS.map((item) => {
+      if (item.index === index) {
+        item.description = mssg;
+      }
+      return;
+    });
+    interactions.setLocalStorage(arrLS);
+  }
+
+  static deleteItem(index) {
+    const arrLS = Array.from(JSON.parse(LocalStorage.getItem('lists')));
+    // delete element that match with the index and saves the array in a new one
+    const newArr = arrLS.filter((object) => object.index !== index);
+
+    newArr.map((object, i) => {
+      // giving new index to all elements
+      object.index = i + 1;
+      return;
+    });
+    interactions.setLocalStorage(newArr);
+  }
+
+  static deleteAllCompleted() {
+    const arrLS = (LocalStorage.length > 0) ? Array.from(JSON.parse(LocalStorage.getItem('lists'))) : [];
+    if (arrLS.length > 0) {
+      const newArr = arrLS.filter((object) => object.completed !== true);
+      newArr.map((object, i) => {
+        // giving new index to all elements
         object.index = i + 1;
+        return;
       });
-      localStorage.clear();
-      setLocalStorage(arrayToSave);
-    } else if (e.target.matches('button')) {
-      const elements = document.getElementsByTagName('ul');
-      // create an array of the child elements
-      const childArray = Array.from(elements[0].children);
-      childArray.forEach((child) => {
-        elements[0].removeChild(child);
-      });
-      localStorage.clear();
+      interactions.setLocalStorage(newArr);
+    } else {
+      return;
     }
-  });
+  }
+
+  static resetList() {
+    /*eslint-disable */
+    const arrLS = (LocalStorage.length > 0) ? Array.from(JSON.parse(LocalStorage.getItem('lists'))) : [];
+    if (arrLS.length > 0) {
+      LocalStorage.clear();
+      LocalStorage.setItem('lists', '[]');
+    } else {
+      return;
+    }
+  }
 }
 
-export { add, deleteItem };
+export { ListItem };

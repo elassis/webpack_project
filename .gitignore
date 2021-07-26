@@ -2,4 +2,4 @@
 .stylelintrc.json
 .vscode/
 .github/
-node_modules
+node_modules/

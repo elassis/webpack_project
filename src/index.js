@@ -1,15 +1,18 @@
 /* eslint-disable */
 import _ from 'lodash';
 import './style.css';
-import './status.js';
-import { add, deleteItem } from './crud.js'; 
-import { dragDrop } from './dragDrop.js';
+import { listItem } from './crud.js';
+import { interactions } from './interactions.js';
+import { dragDrop } from './dragDrop';
 
-function component() {
-  const element = document.querySelector('.to-do-placeholder');  
-  add(element);
-  deleteItem();
+
+const component = () => {
+ 
+  listItem.init();
+  interactions.init();
   dragDrop();
+
+  
 }
 
 

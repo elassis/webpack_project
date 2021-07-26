@@ -1,4 +1,5 @@
-import { setLocalStorage } from './status.js';
+/*eslint-disable */
+import { interactions } from './interactions.js';
 
 function interchange(newElement, currentElement) {
   const dragItem = newElement;
@@ -17,15 +18,13 @@ function reOrderLS() {
 
   arrElements.forEach((element) => {
     const obj = {
-      index: parseInt(element.id, 10),
+      index: parseInt(element.firstChild.nextSibling.id, 10),
       description: element.children[1].value,
       completed: element.children[0].checked,
     };
     arrObj.push(obj);
   });
-
-  localStorage.clear();
-  setLocalStorage(arrObj);
+  interactions.setLocalStorage(arrObj);
 }
 
 function dragDrop() {
