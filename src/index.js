@@ -1,7 +1,6 @@
 import './style.css';
 
 function component() {
- 
   const objArr = [
     {
       description: 'Wash dishes',
