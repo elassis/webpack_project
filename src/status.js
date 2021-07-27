@@ -16,32 +16,29 @@ function setLocalStorage() {
   const arr = [];
   localStorage.clear();
   const elements = document.getElementsByClassName('check');
+  const arrElements = Array.from(elements);
   const containers = document.getElementsByTagName('li');
-  let i = 0;
-  while (i < elements.length) {
+
+  arrElements.forEach((element, i) => {
     const obj = {
       index: i,
-      checked: elements[i].checked,
+      checked: element.checked,
       description: containers[i].children[1].value,
     };
     arr.push(obj);
-    /* eslint-disable */
-    i++;
-  }
+  });
   localStorage.setItem('lists', JSON.stringify(arr));
   setStyle(localStorage.getItem('lists'));
 }
 
 function status() {
   const elements = document.getElementsByClassName('check');
-  let i = 0;
-  while (i < elements.length) {
-    elements[i].addEventListener('change', () => {
+  const arrElements = Array.from(elements);
+  arrElements.forEach((element) => {
+    element.addEventListener('change', () => {
       setLocalStorage();
     });
-    /* eslint-disable */
-    i++;
-  }
+  });
   if (localStorage.getItem('lists')) {
     setStyle(localStorage.getItem('lists'));
   }

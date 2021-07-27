@@ -12,44 +12,37 @@ function interchange(newElement, currentElement) {
 
 function dragDrop() {
   const elements = document.getElementsByTagName('li');
+  const arrElements = Array.from(elements);
   let dragItem = null;
   const containers = document.querySelectorAll('.container');
-  let i = 0;
-  let j = 0;
-  while (i < elements.length) {
-    const element = elements[i];
-    /* eslint-disable */
+  const arrContainers = Array.from(containers);
+
+  arrElements.forEach((element) => {
     element.addEventListener('dragstart', () => {
       dragItem = element;
     });
-      /* eslint-disable */
+
     element.addEventListener('dragend', () => {
       dragItem = null;
     });
-    /* eslint-disable */
-    i++;
-  }
+  });
 
-  while (j < containers.length) {
-    const container = containers[j];
-  /* eslint-disable */
+  arrContainers.forEach((container) => {
     container.addEventListener('dragover', (e) => {
       e.preventDefault();
     });
-  /* eslint-disable */
+
     container.addEventListener('dragenter', (e) => {
       e.preventDefault();
     });
-  /* eslint-disable */
+
     container.addEventListener('drop', (
 
     ) => {
       interchange(dragItem, container.firstElementChild);
       setLocalStorage();
     });
-    /* eslint-disable */
-    j++;
-  }
+  });
 }
-  /* eslint-disable */
+/* eslint-disable */
 export { dragDrop };
