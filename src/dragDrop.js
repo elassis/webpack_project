@@ -10,7 +10,7 @@ function interchange(newElement, currentElement) {
   parentOld.appendChild(dragItem);
 }
 
-function dragDrop() {
+export default function dragDrop() {
   const elements = document.getElementsByTagName('li');
   const arrElements = Array.from(elements);
   let dragItem = null;
@@ -44,5 +44,3 @@ function dragDrop() {
     });
   });
 }
-/* eslint-disable */
-export { dragDrop };

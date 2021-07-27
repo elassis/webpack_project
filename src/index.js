@@ -1,11 +1,8 @@
-/* eslint-disable */
-import _ from 'lodash';
 import './style.css';
-import {status} from './status.js';
-import {dragDrop} from './dragDrop.js';
+import { status } from './status.js';
+import dragDrop from './dragDrop.js';
 
 function component() {
-  
   const objArr = [
     {
       description: 'Wash dishes',
@@ -26,13 +23,13 @@ function component() {
   const element = document.querySelector('.to-do-placeholder');
 
   function addList(obj, ele) {
-    let arr = []
-    if(localStorage.length === 0){
-     arr = Array.from(obj);    
-    }else{
-      arr = Array.from(JSON.parse(localStorage.getItem('lists')));     
+    let arr = [];
+    if (localStorage.length === 0) {
+      arr = Array.from(obj);
+    } else {
+      arr = Array.from(JSON.parse(localStorage.getItem('lists')));
     }
-    arr.forEach((task,i) => {
+    arr.forEach((task) => {
       const childElement = ` <div class="container">
                                 <li draggable="true" id="${task.index}">
                                   <input class="check" type="checkbox">
@@ -46,9 +43,7 @@ function component() {
   }
   addList(objArr, element);
   status();
-  dragDrop()
+  dragDrop();
 }
 
-
-
-window.onload=component();
+window.onload = component();
