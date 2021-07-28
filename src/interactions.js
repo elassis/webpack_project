@@ -1,8 +1,13 @@
-import { ListItem } from './crud.js';
+import ListItem from './crud.js';
 
 import { dragDrop } from './dragDrop.js';
 
 const input = document.querySelector('#main-input');
+
+export default function setLocalStorage(arr) {
+  localStorage.clear();
+  localStorage.setItem('lists', JSON.stringify(arr));
+}
 
 const interactions = {
   init: () => {
@@ -29,23 +34,19 @@ const interactions = {
         const status = e.path[0].checked;
         if (status) {
           e.path[1].childNodes[3].classList.add('done');
-          arrLS.map((item) => {
+          arrLS.forEach((item) => {
             if (item.index === index) { item.completed = true; }
           });
-          interactions.setLocalStorage(arrLS);
+          setLocalStorage(arrLS);
         } else {
           e.path[1].childNodes[3].classList.remove('done');
-          arrLS.map((item) => {
+          arrLS.forEach((item) => {
             if (item.index === index) { item.completed = false; }
           });
-          interactions.setLocalStorage(arrLS);
+          setLocalStorage(arrLS);
         }
       }
     });
-  },
-  setLocalStorage: (arr) => {
-    localStorage.clear();
-    localStorage.setItem('lists', JSON.stringify(arr));
   },
   deleteItem: () => {
     document.addEventListener('click', (e) => {
@@ -71,8 +72,6 @@ const interactions = {
           });
           // execute function in LS
           ListItem.deleteAllCompleted();
-        } else {
-
         }
       } else if (e.target.className === 'fas fa-sync') {
         const elements = Array.from(document.getElementsByClassName('container'));
@@ -91,4 +90,4 @@ const interactions = {
   },
 };
 
-export default { interactions };
+export { interactions };

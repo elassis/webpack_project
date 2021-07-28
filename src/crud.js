@@ -1,13 +1,13 @@
-/*eslint-disable*/ 
-import interactions from './interactions.js';
+import setLocalStorage from './interactions.js';
+
 const LocalStorage = window.localStorage;
 
-class ListItem {
+export default class ListItem {
   static list = [];
 
   constructor(description, index = null, completed = false) {
-    this.index = index,
-    this.description = description,
+    this.index = index;
+    this.description = description;
     this.completed = completed;
   }
 
@@ -29,11 +29,11 @@ class ListItem {
       const arrNew = Array.from(JSON.parse(localStorage.getItem('lists')));
       item.index = arrNew.length + 1;
       arrNew.push(item);
-      interactions.setLocalStorage(arrNew);
+      setLocalStorage(arrNew);
     } else {
       item.index = 1;
       this.list.push(item);
-      interactions.setLocalStorage(this.list);
+      setLocalStorage(this.list);
     }
   }
 
@@ -57,14 +57,12 @@ class ListItem {
 
   static editItem(index, mssg) {
     const arrLS = Array.from(JSON.parse(LocalStorage.getItem('lists')));
-    arrLS.map((item) => {
+    arrLS.forEach((item) => {
       if (item.index === index) {
         item.description = mssg;
-      } else {
-
       }
     });
-    interactions.setLocalStorage(arrLS);
+    setLocalStorage(arrLS);
   }
 
   static deleteItem(index) {
@@ -72,24 +70,22 @@ class ListItem {
     // delete element that match with the index and saves the array in a new one
     const newArr = arrLS.filter((object) => object.index !== index);
 
-    newArr.map((object, i) => {
+    newArr.forEach((object, i) => {
       // giving new index to all elements
       object.index = i + 1;
     });
-    interactions.setLocalStorage(newArr);
+    setLocalStorage(newArr);
   }
 
   static deleteAllCompleted() {
     const arrLS = (LocalStorage.length > 0) ? Array.from(JSON.parse(LocalStorage.getItem('lists'))) : [];
     if (arrLS.length > 0) {
       const newArr = arrLS.filter((object) => object.completed !== true);
-      newArr.map((object, i) => {
+      newArr.forEach((object, i) => {
         // giving new index to all elements
         object.index = i + 1;
       });
-      interactions.setLocalStorage(newArr);
-    } else {
-
+      setLocalStorage(newArr);
     }
   }
 
@@ -98,10 +94,6 @@ class ListItem {
     if (arrLS.length > 0) {
       LocalStorage.clear();
       LocalStorage.setItem('lists', '[]');
-    } else {
-
     }
   }
 }
-
-export default { ListItem };
