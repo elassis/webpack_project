@@ -1,4 +1,4 @@
-import { ListItem } from './crud.js';
+import ListItem from './crud.js';
 
 import { dragDrop } from './dragDrop.js';
 
@@ -91,4 +91,4 @@ const interactions = {
   },
 };
 
-export default { interactions };
+export { interactions };

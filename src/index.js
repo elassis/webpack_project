@@ -1,5 +1,5 @@
 import './style.css';
-import { ListItem } from './crud.js';
+import ListItem  from './crud.js';
 import { interactions } from './interactions.js';
 import { dragDrop } from './dragDrop';
 

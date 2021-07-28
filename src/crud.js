@@ -1,8 +1,8 @@
 /*eslint-disable*/ 
-import interactions from './interactions.js';
+import { interactions } from './interactions.js';
 const LocalStorage = window.localStorage;
 
-class ListItem {
+export default class ListItem {
   static list = [];
 
   constructor(description, index = null, completed = false) {
@@ -104,4 +104,3 @@ class ListItem {
   }
 }
 
-export default { ListItem };
