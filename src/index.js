@@ -10,9 +10,7 @@ const component = () => {
  
   ListItem.init();
   interactions.init();
-  dragDrop();
-
-  
+  dragDrop();  
 }
 
 
