@@ -1,5 +1,3 @@
-
-import setLocalStorage from './interactions.js';
 const LocalStorage = window.localStorage;
 
 export default class ListItem {

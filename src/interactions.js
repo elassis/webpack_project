@@ -1,14 +1,12 @@
-
 import dragDrop from './dragDrop.js';
 import ListItem from './crud.js';
 
 const input = document.querySelector('#main-input');
 
- function setLocalStorage(arr) {
+function setLocalStorage(arr) {
   localStorage.clear();
   localStorage.setItem('lists', JSON.stringify(arr));
 }
-
 
 const interactions = {
   init: () => {
@@ -91,6 +89,4 @@ const interactions = {
   },
 };
 
-
 export default interactions;
-
