@@ -29,13 +29,13 @@ const interactions = {
         const status = e.path[0].checked;
         if (status) {
           e.path[1].childNodes[3].classList.add('done');
-          arrLS.map((item) => {
+          arrLS.forEach((item) => {
             if (item.index === index) { item.completed = true; }
           });
           interactions.setLocalStorage(arrLS);
         } else {
           e.path[1].childNodes[3].classList.remove('done');
-          arrLS.map((item) => {
+          arrLS.forEach((item) => {
             if (item.index === index) { item.completed = false; }
           });
           interactions.setLocalStorage(arrLS);
@@ -71,8 +71,6 @@ const interactions = {
           });
           // execute function in LS
           ListItem.deleteAllCompleted();
-        } else {
-
         }
       } else if (e.target.className === 'fas fa-sync') {
         const elements = Array.from(document.getElementsByClassName('container'));

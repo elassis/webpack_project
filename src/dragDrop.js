@@ -1,4 +1,3 @@
-/*eslint-disable */
 import { interactions } from './interactions.js';
 
 function interchange(newElement, currentElement) {
