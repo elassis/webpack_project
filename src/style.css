@@ -42,15 +42,34 @@ ul {
 li {
   width: 100%;
   box-sizing: border-box;
+  background-color: white;
   padding: 10px 10px 10px 5px;
   border-bottom: 1px solid #e0e0e0;
 }
 
 li > input.text {
   display: inline;
-  width: 90%;
+  width: 75%;
   border: none;
   font-style: normal;
+}
+
+.fa-trash-alt,
+.fa-ellipsis-v {
+  display: none;
+}
+
+.fa-trash-alt {
+  padding: 0 10px;
+}
+
+.fa-ellipsis-v:hover {
+  cursor: -webkit-grab;
+}
+
+li:hover > .fa-trash-alt,
+li:hover > .fa-ellipsis-v {
+  display: inline;
 }
 
 button {
@@ -60,4 +79,15 @@ button {
   padding: 20px 10px 10px 10px;
   color: grey;
   cursor: pointer;
+}
+
+.done {
+  color: grey;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.container {
+  height: 56px;
+  background-color: grey;
 }

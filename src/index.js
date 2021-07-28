@@ -1,35 +1,12 @@
 import './style.css';
+import { ListItem } from './crud.js';
+import { interactions } from './interactions.js';
+import { dragDrop } from './dragDrop';
 
-function component() {
- 
-  const objArr = [
-    {
-      description: 'Wash dishes',
-      completed: false,
-      index: 0,
-    },
-    {
-      description: 'Clean bedroom',
-      completed: false,
-      index: 1,
-    },
-    {
-      description: 'Make dinner',
-      completed: false,
-      index: 2,
-    },
-  ];
-  const element = document.querySelector('.to-do-placeholder');
+const component = () => {
+  ListItem.init();
+  interactions.init();
+  dragDrop();
+};
 
-  function addList(obj, ele) {
-    const arr = Array.from(obj);
-    arr.forEach((task) => {
-      const childElement = `<li id="${task.index}"><input type="checkbox"><input type="text" class="text" value="${task.description}"><i class="fas fa-ellipsis-v"></i></li>`;
-      ele.innerHTML += childElement;
-    });
-  }
-
-  addList(objArr, element);
-}
-
-window.onload = component();
+component();
