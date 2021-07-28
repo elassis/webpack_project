@@ -1,10 +1,9 @@
+import dragDrop from './dragDrop.js';
 import ListItem from './crud.js';
-
-import { dragDrop } from './dragDrop.js';
 
 const input = document.querySelector('#main-input');
 
-export default function setLocalStorage(arr) {
+function setLocalStorage(arr) {
   localStorage.clear();
   localStorage.setItem('lists', JSON.stringify(arr));
 }
@@ -90,4 +89,4 @@ const interactions = {
   },
 };
 
-export { interactions };
+export default interactions;

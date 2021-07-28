@@ -1,4 +1,4 @@
-import setLocalStorage from './interactions.js';
+import ListItem from './crud.js';
 
 function interchange(newElement, currentElement) {
   const dragItem = newElement;
@@ -23,10 +23,11 @@ function reOrderLS() {
     };
     arrObj.push(obj);
   });
-  setLocalStorage(arrObj);
+
+  ListItem.setLocalStorage(arrObj);
 }
 
-function dragDrop() {
+export default function dragDrop() {
   const elements = document.getElementsByTagName('li');
   const arrElements = Array.from(elements);
   const containers = document.querySelectorAll('.container');
@@ -60,5 +61,3 @@ function dragDrop() {
     });
   });
 }
-
-export { dragDrop };
