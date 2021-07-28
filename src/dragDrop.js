@@ -61,5 +61,5 @@ function dragDrop() {
     });
   });
 }
-/* eslint-disable */
+
 export { dragDrop };

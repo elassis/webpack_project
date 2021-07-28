@@ -1,12 +1,11 @@
-/* eslint-disable */
-import { interactions } from './interactions.js';
-
+/*eslint-disable*/ 
+import interactions from './interactions.js';
 const LocalStorage = window.localStorage;
 
 class ListItem {
   static list = [];
-/* eslint-disable */
-  constructor(description, index, completed = false) {
+
+  constructor(description, index = null, completed = false) {
     this.index = index,
     this.description = description,
     this.completed = completed;
@@ -25,7 +24,7 @@ class ListItem {
 
   static addItem(value) {
     const item = new ListItem(value);
-    // console.log(item)
+
     if (localStorage.length > 0) {
       const arrNew = Array.from(JSON.parse(localStorage.getItem('lists')));
       item.index = arrNew.length + 1;
@@ -61,8 +60,9 @@ class ListItem {
     arrLS.map((item) => {
       if (item.index === index) {
         item.description = mssg;
+      } else {
+
       }
-      return;
     });
     interactions.setLocalStorage(arrLS);
   }
@@ -75,7 +75,6 @@ class ListItem {
     newArr.map((object, i) => {
       // giving new index to all elements
       object.index = i + 1;
-      return;
     });
     interactions.setLocalStorage(newArr);
   }
@@ -87,24 +86,22 @@ class ListItem {
       newArr.map((object, i) => {
         // giving new index to all elements
         object.index = i + 1;
-        return;
       });
       interactions.setLocalStorage(newArr);
     } else {
-      return;
+
     }
   }
 
   static resetList() {
-    /*eslint-disable */
     const arrLS = (LocalStorage.length > 0) ? Array.from(JSON.parse(LocalStorage.getItem('lists'))) : [];
     if (arrLS.length > 0) {
       LocalStorage.clear();
       LocalStorage.setItem('lists', '[]');
     } else {
-      return;
+
     }
   }
 }
 
-export { ListItem };
+export default { ListItem };
