@@ -1,7 +1,15 @@
+
 import dragDrop from './dragDrop.js';
 import ListItem from './crud.js';
 
 const input = document.querySelector('#main-input');
+
+ function setLocalStorage(arr) {
+  localStorage.clear();
+  localStorage.setItem('lists', JSON.stringify(arr));
+}
+
+
 const interactions = {
   init: () => {
     document.addEventListener('keyup', (e) => {
@@ -30,20 +38,16 @@ const interactions = {
           arrLS.forEach((item) => {
             if (item.index === index) { item.completed = true; }
           });
-          interactions.setLocalStorage(arrLS);
+          setLocalStorage(arrLS);
         } else {
           e.path[1].childNodes[3].classList.remove('done');
           arrLS.forEach((item) => {
             if (item.index === index) { item.completed = false; }
           });
-          interactions.setLocalStorage(arrLS);
+          setLocalStorage(arrLS);
         }
       }
     });
-  },
-  setLocalStorage: (arr) => {
-    localStorage.clear();
-    localStorage.setItem('lists', JSON.stringify(arr));
   },
   deleteItem: () => {
     document.addEventListener('click', (e) => {
@@ -87,4 +91,6 @@ const interactions = {
   },
 };
 
+
 export default interactions;
+

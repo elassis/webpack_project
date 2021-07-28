@@ -1,3 +1,4 @@
+
 import ListItem from './crud.js';
 
 function interchange(newElement, currentElement) {
@@ -23,6 +24,7 @@ function reOrderLS() {
     };
     arrObj.push(obj);
   });
+
   ListItem.setLocalStorage(arrObj);
 }
 
