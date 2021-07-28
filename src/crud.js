@@ -1,5 +1,3 @@
-import { interactions } from './interactions.js';
-
 const LocalStorage = window.localStorage;
 
 export default class ListItem {
@@ -29,11 +27,11 @@ export default class ListItem {
       const arrNew = Array.from(JSON.parse(localStorage.getItem('lists')));
       item.index = arrNew.length + 1;
       arrNew.push(item);
-      interactions.setLocalStorage(arrNew);
+      this.setLocalStorage(arrNew);
     } else {
       item.index = 1;
       this.list.push(item);
-      interactions.setLocalStorage(this.list);
+      this.setLocalStorage(this.list);
     }
   }
 
@@ -62,7 +60,7 @@ export default class ListItem {
         item.description = mssg;
       }
     });
-    interactions.setLocalStorage(arrLS);
+    this.setLocalStorage(arrLS);
   }
 
   static deleteItem(index) {
@@ -74,7 +72,7 @@ export default class ListItem {
       // giving new index to all elements
       object.index = i + 1;
     });
-    interactions.setLocalStorage(newArr);
+    this.setLocalStorage(newArr);
   }
 
   static deleteAllCompleted() {
@@ -85,7 +83,7 @@ export default class ListItem {
         // giving new index to all elements
         object.index = i + 1;
       });
-      interactions.setLocalStorage(newArr);
+      this.setLocalStorage(newArr);
     }
   }
 
@@ -95,5 +93,10 @@ export default class ListItem {
       LocalStorage.clear();
       LocalStorage.setItem('lists', '[]');
     }
+  }
+
+  static setLocalStorage(arr) {
+    localStorage.clear();
+    localStorage.setItem('lists', JSON.stringify(arr));
   }
 }
