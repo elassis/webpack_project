@@ -36,8 +36,8 @@ export default class ListItem {
   }
 
   static render(array) {
-    const ulElement = document.querySelector('#parent');
-    ulElement.innerHTML = '';
+    const ulElement = document.querySelectorAll('#parent');
+    ulElement[0].innerHTML = '';
     array.forEach((item) => {
       const value = (item.completed === true) ? 'checked' : '';
       const classToShow = (value === 'checked') ? 'text done' : 'text';
@@ -49,7 +49,7 @@ export default class ListItem {
                       <i class="fas fa-ellipsis-v"></i>
                     </li>
                   </div>`;
-      ulElement.innerHTML += child;
+      ulElement[0].innerHTML += child;
     });
   }
 

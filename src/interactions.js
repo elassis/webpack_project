@@ -23,7 +23,7 @@ const interactions = {
       dragDrop();
     });
     interactions.checkCompleteTasks();
-    interactions.deleteItem();
+    interactions.checkItemToDelete();
   },
   checkCompleteTasks: () => {
     document.addEventListener('change', (e) => {
@@ -47,7 +47,7 @@ const interactions = {
       }
     });
   },
-  deleteItem: () => {
+  checkItemToDelete: () => {
     document.addEventListener('click', (e) => {
       if (e.target.className === 'fas fa-trash-alt') {
         const index = parseInt(e.target.parentNode.children[0].id, 10);
@@ -87,6 +87,7 @@ const interactions = {
       }
     });
   },
+
 };
 
 export default interactions;
