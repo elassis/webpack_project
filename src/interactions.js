@@ -1,4 +1,4 @@
-import dragDrop from './dragDrop.js';
+import { dragDrop } from './dragDrop.js';
 import ListItem from './crud.js';
 
 const input = document.querySelector('#main-input');
@@ -18,7 +18,8 @@ const interactions = {
       } else if (e.key === 'Enter' && e.target.matches('.text')) {
         const index = parseInt(e.target.parentNode.children[0].id, 10);
         const mssg = e.target.value;
-        ListItem.editItem(index, mssg);
+        const arrLS = Array.from(JSON.parse(localStorage.getItem('lists')));
+        ListItem.editItem(index, mssg, arrLS);
       }
       dragDrop();
     });
@@ -30,19 +31,21 @@ const interactions = {
       const arrLS = Array.from(JSON.parse(localStorage.getItem('lists')));
       if (e.target.matches('.check')) {
         const index = parseInt(e.target.id, 10);
-        const status = e.path[0].checked;
+        const status = e.composedPath()[0].checked;
         if (status) {
-          e.path[1].childNodes[3].classList.add('done');
-          arrLS.forEach((item) => {
-            if (item.index === index) { item.completed = true; }
-          });
-          setLocalStorage(arrLS);
+          e.composedPath()[1].childNodes[3].classList.add('done');
+          interactions.updateStatus(arrLS, index, true);
+          // arrLS.forEach((item) => {
+          //   if (item.index === index) { item.completed = true; }
+          // });
+          // setLocalStorage(arrLS);
         } else {
-          e.path[1].childNodes[3].classList.remove('done');
-          arrLS.forEach((item) => {
-            if (item.index === index) { item.completed = false; }
-          });
-          setLocalStorage(arrLS);
+          e.composedPath()[1].childNodes[3].classList.remove('done');
+          interactions.updateStatus(arrLS, index, false);
+          // arrLS.forEach((item) => {
+          //   if (item.index === index) { item.completed = false; }
+          // });
+          // setLocalStorage(arrLS);
         }
       }
     });
@@ -53,10 +56,7 @@ const interactions = {
         const index = parseInt(e.target.parentNode.children[0].id, 10);
         // erase the element from the html
         interactions.deleteHtmlItem(e.target);
-        // const li = e.target.parentNode;
-        // const div = li.parentNode;
-        // const ul = div.parentNode;
-        // ul.removeChild(div);
+
         // update the localStorage
         ListItem.deleteItem(index);
       } else if (e.target.matches('#clearAll')) {
@@ -71,7 +71,8 @@ const interactions = {
             ul.removeChild(div);
           });
           // execute function in LS
-          ListItem.deleteAllCompleted();
+          const arrLS = (localStorage.length > 0) ? Array.from(JSON.parse(localStorage.getItem('lists'))) : [];
+          ListItem.deleteAllCompleted(arrLS);
         }
       } else if (e.target.className === 'fas fa-sync') {
         const elements = Array.from(document.getElementsByClassName('container'));
@@ -94,7 +95,12 @@ const interactions = {
     const ul = div.parentNode;
     ul.removeChild(div);
   },
-
+  updateStatus: (arrLS, index, state) => {
+    arrLS.forEach((item) => {
+      if (item.index === index) { item.completed = state; }
+    });
+    setLocalStorage(arrLS);
+  },
 };
 
 export default interactions;

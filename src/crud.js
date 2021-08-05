@@ -53,8 +53,7 @@ export default class ListItem {
     });
   }
 
-  static editItem(index, mssg) {
-    const arrLS = Array.from(JSON.parse(LocalStorage.getItem('lists')));
+  static editItem(index, mssg, arrLS) {
     arrLS.forEach((item) => {
       if (item.index === index) {
         item.description = mssg;
@@ -75,16 +74,16 @@ export default class ListItem {
     this.setLocalStorage(newArr);
   }
 
-  static deleteAllCompleted() {
-    const arrLS = (LocalStorage.length > 0) ? Array.from(JSON.parse(LocalStorage.getItem('lists'))) : [];
+  static deleteAllCompleted(arrLS) {
     if (arrLS.length > 0) {
       const newArr = arrLS.filter((object) => object.completed !== true);
       newArr.forEach((object, i) => {
-        // giving new index to all elements
         object.index = i + 1;
       });
       this.setLocalStorage(newArr);
+      return newArr;
     }
+    return [];
   }
 
   static resetList() {
