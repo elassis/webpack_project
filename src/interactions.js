@@ -52,10 +52,11 @@ const interactions = {
       if (e.target.className === 'fas fa-trash-alt') {
         const index = parseInt(e.target.parentNode.children[0].id, 10);
         // erase the element from the html
-        const li = e.target.parentNode;
-        const div = li.parentNode;
-        const ul = div.parentNode;
-        ul.removeChild(div);
+        interactions.deleteHtmlItem(e.target);
+        // const li = e.target.parentNode;
+        // const div = li.parentNode;
+        // const ul = div.parentNode;
+        // ul.removeChild(div);
         // update the localStorage
         ListItem.deleteItem(index);
       } else if (e.target.matches('#clearAll')) {
@@ -87,6 +88,12 @@ const interactions = {
       }
     });
   },
+  deleteHtmlItem:(element)=>{
+        const li = element.parentNode;
+        const div = li.parentNode;
+        const ul = div.parentNode;
+        ul.removeChild(div);
+  }
 
 };
 
