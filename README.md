@@ -9,6 +9,9 @@
 # Prerequisites
 * install node.js
 * install webpack
+* install jest
+* install babel
+
 # Setup
 * clone repository locally
 * Run npm start command in your local terminal
