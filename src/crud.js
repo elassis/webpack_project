@@ -53,8 +53,7 @@ export default class ListItem {
     });
   }
 
-  static editItem(index, mssg) {
-    const arrLS = Array.from(JSON.parse(LocalStorage.getItem('lists')));
+  static editItem(index, mssg,arrLS) {    
     arrLS.forEach((item) => {
       if (item.index === index) {
         item.description = mssg;
