@@ -88,12 +88,12 @@ const interactions = {
       }
     });
   },
-  deleteHtmlItem:(element)=>{
-        const li = element.parentNode;
-        const div = li.parentNode;
-        const ul = div.parentNode;
-        ul.removeChild(div);
-  }
+  deleteHtmlItem: (element) => {
+    const li = element.parentNode;
+    const div = li.parentNode;
+    const ul = div.parentNode;
+    ul.removeChild(div);
+  },
 
 };
 
