@@ -87,11 +87,8 @@ describe('remove selected itemes', () => {
         </li>
       </div>
     </ul>`;
-    //  set an array of both html elements
-    //  const liArr = document.getElementsByTagName('li');
-    //  set a variable to get the array from the return value from the function
-    // const result = ListItem.deleteAllCompleted(mockLocalStorage);
 
+    // sending the mock of the local storage and checking the returning value
     expect(ListItem.deleteAllCompleted(mockLocalStorage)).toHaveLength(2);
   });
 });
