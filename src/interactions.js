@@ -19,7 +19,7 @@ const interactions = {
         const index = parseInt(e.target.parentNode.children[0].id, 10);
         const mssg = e.target.value;
         const arrLS = Array.from(JSON.parse(localStorage.getItem('lists')));
-        ListItem.editItem(index, mssg,arrLS);
+        ListItem.editItem(index, mssg, arrLS);
       }
       dragDrop();
     });
@@ -31,17 +31,17 @@ const interactions = {
       const arrLS = Array.from(JSON.parse(localStorage.getItem('lists')));
       if (e.target.matches('.check')) {
         const index = parseInt(e.target.id, 10);
-        const status = e.path[0].checked;
+        const status = e.composedPath()[0].checked;
         if (status) {
-          e.path[1].childNodes[3].classList.add('done');
-          interactions.updateStatus(arrLS,index,true);
+          e.composedPath()[1].childNodes[3].classList.add('done');
+          interactions.updateStatus(arrLS, index, true);
           // arrLS.forEach((item) => {
           //   if (item.index === index) { item.completed = true; }
           // });
           // setLocalStorage(arrLS);
         } else {
-          e.path[1].childNodes[3].classList.remove('done');
-          interactions.updateStatus(arrLS,index,false);
+          e.composedPath()[1].childNodes[3].classList.remove('done');
+          interactions.updateStatus(arrLS, index, false);
           // arrLS.forEach((item) => {
           //   if (item.index === index) { item.completed = false; }
           // });
@@ -56,7 +56,7 @@ const interactions = {
         const index = parseInt(e.target.parentNode.children[0].id, 10);
         // erase the element from the html
         interactions.deleteHtmlItem(e.target);
-        
+
         // update the localStorage
         ListItem.deleteItem(index);
       } else if (e.target.matches('#clearAll')) {
@@ -71,7 +71,7 @@ const interactions = {
             ul.removeChild(div);
           });
           // execute function in LS
-          const arrLS = (localStorage.length > 0) ? Array.from(JSON.parse(localStorage.getItem('lists'))): [];
+          const arrLS = (localStorage.length > 0) ? Array.from(JSON.parse(localStorage.getItem('lists'))) : [];
           ListItem.deleteAllCompleted(arrLS);
         }
       } else if (e.target.className === 'fas fa-sync') {
@@ -97,11 +97,10 @@ const interactions = {
   },
   updateStatus: (arrLS, index, state) => {
     arrLS.forEach((item) => {
-     if (item.index === index) { item.completed = state; }
+      if (item.index === index) { item.completed = state; }
     });
     setLocalStorage(arrLS);
-  }
-
+  },
 };
 
 export default interactions;

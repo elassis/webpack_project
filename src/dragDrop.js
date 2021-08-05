@@ -12,81 +12,82 @@ function interchange(newElement, currentElement) {
   parentOld.appendChild(dragItem);
 }
 
- function reOrderLS(newElement, currentElement,arrLocalStorage) {
-  
-  //function to get the index values in the array
-  function getIndexesInLocalStorage(indexElementOne,indexElementTwo,arrLocalStorage){
-    let arrIndexes = [];
-    //get the position of the element in the array
-    arrLocalStorage.map((obj,i)=>{
-      if(obj.index === indexElementOne){
-        arrIndexes.push(i);  
+function reOrderLS(newElement, currentElement, arrLocalStorage) {
+  //  function to get the index values in the array
+  function getIndexesInLocalStorage(indexElementOne, indexElementTwo, arrLocalStorage) {
+    const arrIndexes = [];
+    //  get the position of the element in the array
+    arrLocalStorage.forEach((obj, i) => {
+      if (obj.index === indexElementOne) {
+        arrIndexes.push(i);
       }
-      if(obj.index === indexElementTwo){
+      if (obj.index === indexElementTwo) {
         arrIndexes.push(i);
       }
     });
     return arrIndexes;
   }
-  
-  let indexes = getIndexesInLocalStorage(parseInt(newElement.firstChild.nextSibling.id),parseInt(currentElement.firstChild.nextSibling.id),arrLocalStorage);
 
-  let currentObject = {
+  const indexes = getIndexesInLocalStorage(
+    parseInt(newElement.firstChild.nextSibling.id, 10),
+    parseInt(currentElement.firstChild.nextSibling.id, 10),
+    arrLocalStorage,
+  );
+
+  const currentObject = {
     index: arrLocalStorage[indexes[0]].index,
-    description:arrLocalStorage[indexes[0]].description,
-    completed:arrLocalStorage[indexes[0]].completed
-  }
-  let draggedObject = {
+    description: arrLocalStorage[indexes[0]].description,
+    completed: arrLocalStorage[indexes[0]].completed,
+  };
+
+  const draggedObject = {
     index: arrLocalStorage[indexes[1]].index,
-    description:arrLocalStorage[indexes[1]].description,
-    completed:arrLocalStorage[indexes[1]].completed
-  }
- 
+    description: arrLocalStorage[indexes[1]].description,
+    completed: arrLocalStorage[indexes[1]].completed,
+  };
+
   arrLocalStorage[indexes[0]].index = draggedObject.index;
   arrLocalStorage[indexes[0]].description = draggedObject.description;
   arrLocalStorage[indexes[0]].completed = draggedObject.completed;
-  
+
   arrLocalStorage[indexes[1]].index = currentObject.index;
   arrLocalStorage[indexes[1]].description = currentObject.description;
   arrLocalStorage[indexes[1]].completed = currentObject.completed;
- 
+
   ListItem.setLocalStorage(arrLocalStorage);
 }
 
-  function dragDrop() {
-    const elements = document.getElementsByTagName('li');
-    const arrElements = Array.from(elements);
-    const containers = document.querySelectorAll('.container');
-    const arrContainers = Array.from(containers);
-    let dragItem = null;
+function dragDrop() {
+  const elements = document.getElementsByTagName('li');
+  const arrElements = Array.from(elements);
+  const containers = document.querySelectorAll('.container');
+  const arrContainers = Array.from(containers);
+  let dragItem = null;
 
-    arrElements.forEach((element) => {
-      element.addEventListener('dragstart', () => {
-        dragItem = element;
-      });
-
-      element.addEventListener('dragend', () => {
-        dragItem = null;
-      });
+  arrElements.forEach((element) => {
+    element.addEventListener('dragstart', () => {
+      dragItem = element;
     });
 
-    arrContainers.forEach((container) => {
-      container.addEventListener('dragover', (e) => {
-        e.preventDefault();
-      });
-
-      container.addEventListener('dragenter', (e) => {
-        e.preventDefault();
-      });
-
-      container.addEventListener('drop', (
-
-      ) => {
-        reOrderLS(dragItem, container.firstElementChild, LocalStorage);
-        
-        interchange(dragItem, container.firstElementChild);
-      });
+    element.addEventListener('dragend', () => {
+      dragItem = null;
     });
+  });
+
+  arrContainers.forEach((container) => {
+    container.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+
+    container.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+    });
+
+    container.addEventListener('drop', () => {
+      reOrderLS(dragItem, container.firstElementChild, LocalStorage);
+      interchange(dragItem, container.firstElementChild);
+    });
+  });
 }
 
-export {dragDrop, reOrderLS};
+export { dragDrop, reOrderLS };
