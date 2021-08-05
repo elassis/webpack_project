@@ -4,6 +4,7 @@
 
 import ListItem from '../src/crud.js';
 import interactions from '../src/interactions.js';
+import { reOrderLS } from '../src/dragDrop.js';
 
 const mockLocalStorage = [
   {
@@ -33,4 +34,32 @@ test('change the completed property',()=>{
     interactions.updateStatus(mockLocalStorage,2,true);
     const element = mockLocalStorage[1];
     expect(element.completed).toBeTruthy();
+});
+
+test('change the index property',()=>{
+    document.body.innerHTML=`
+    <ul>
+      <div class="container">
+        <li draggable="true">
+          <input id="1" type="checkbox" class="check" id="">
+          <input  type="text">
+          <i class="fas fa-trash-alt"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </li>
+      </div>
+      <div class="container">
+        <li draggable="true">
+          <input id="2" type="checkbox" class="check" id="">
+          <input  type="text">
+          <i class="fas fa-trash-alt"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </li>
+      </div>
+    </ul>`;
+    //set an array of both html elements
+    const arrLi = document.getElementsByTagName('li');
+    //execute drag and drop and change the values in the mock localStorage
+    reOrderLS(arrLi[0],arrLi[1],mockLocalStorage);
+    //test if the value of the index is 2 instead of 1
+    expect(mockLocalStorage[0].index).toEqual(2);
 });

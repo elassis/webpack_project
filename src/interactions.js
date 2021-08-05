@@ -1,4 +1,4 @@
-import dragDrop from './dragDrop.js';
+import { dragDrop } from './dragDrop.js';
 import ListItem from './crud.js';
 
 const input = document.querySelector('#main-input');
