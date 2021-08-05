@@ -71,7 +71,8 @@ const interactions = {
             ul.removeChild(div);
           });
           // execute function in LS
-          ListItem.deleteAllCompleted();
+          const arrLS = (localStorage.length > 0) ? Array.from(JSON.parse(localStorage.getItem('lists'))): [];
+          ListItem.deleteAllCompleted(arrLS);
         }
       } else if (e.target.className === 'fas fa-sync') {
         const elements = Array.from(document.getElementsByClassName('container'));
